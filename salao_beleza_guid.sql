@@ -1,10 +1,10 @@
 USE master;
 GO
 
-CREATE DATABASE SalaoBeleza;
+CREATE DATABASE OrBlancDB;
 GO
 
-USE SalaoBeleza;
+USE OrBlancDB;
 GO
 
 
