@@ -26,10 +26,9 @@ public partial class OrBlancDBContext : DbContext
 
     public virtual DbSet<VW_AgendaCompleta> VW_AgendaCompleta { get; set; }
 
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Agendamento>(entity =>  
+        modelBuilder.Entity<Agendamento>(entity =>
         {
             entity.HasKey(e => e.id_agendamento);
 
@@ -82,6 +81,7 @@ public partial class OrBlancDBContext : DbContext
             entity.Property(e => e.nome)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.senha).HasMaxLength(32);
             entity.Property(e => e.telefone)
                 .HasMaxLength(20)
                 .IsUnicode(false);
@@ -99,6 +99,7 @@ public partial class OrBlancDBContext : DbContext
             entity.Property(e => e.nome)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.senha).HasMaxLength(32);
             entity.Property(e => e.telefone)
                 .HasMaxLength(20)
                 .IsUnicode(false);

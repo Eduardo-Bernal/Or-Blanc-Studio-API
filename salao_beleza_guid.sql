@@ -1,5 +1,3 @@
-USE master;
-GO
 
 CREATE DATABASE OrBlancDB;
 GO
@@ -13,6 +11,7 @@ CREATE TABLE Cliente (
     nome        VARCHAR(100)     NOT NULL,
     telefone    VARCHAR(20)      NOT NULL,
     email       VARCHAR(100)     NULL,
+    senha       VARBINARY(32)    NOT NULL,
 
     CONSTRAINT PK_Cliente       PRIMARY KEY (id_cliente),
     CONSTRAINT UQ_Cliente_Email UNIQUE (email),
@@ -26,6 +25,7 @@ CREATE TABLE Profissional (
     especialidade   VARCHAR(100)     NOT NULL,
     telefone        VARCHAR(20)      NOT NULL,
     ativo           BIT              NOT NULL DEFAULT 1,
+    senha           VARBINARY(32)    NOT NULL,
 
     CONSTRAINT PK_Profissional PRIMARY KEY (id_profissional)
 );
@@ -92,12 +92,12 @@ DECLARE @cli3 UNIQUEIDENTIFIER = NEWID();
 DECLARE @cli4 UNIQUEIDENTIFIER = NEWID();
 DECLARE @cli5 UNIQUEIDENTIFIER = NEWID();
 
-INSERT INTO Cliente (id_cliente, nome, telefone, email) VALUES
-    (@cli1, 'Ana Paula Silva',  '11987654321', 'ana.paula@email.com'),
-    (@cli2, 'Beatriz Souza',    '11976543210', 'beatriz.souza@email.com'),
-    (@cli3, 'Carlos Oliveira',  '11965432109', 'carlos.oliveira@email.com'),
-    (@cli4, 'Diana Lima',       '11954321098', 'diana.lima@email.com'),
-    (@cli5, 'Eduardo Santos',   '11943210987', 'eduardo.santos@email.com');
+INSERT INTO Cliente (id_cliente, nome, telefone, email, senha) VALUES
+    (@cli1, 'Ana Paula Silva',  '11987654321', 'ana.paula@email.com',    HASHBYTES('SHA2_256', 'ana123')),
+    (@cli2, 'Beatriz Souza',    '11976543210', 'beatriz.souza@email.com', HASHBYTES('SHA2_256', 'bea123')),
+    (@cli3, 'Carlos Oliveira',  '11965432109', 'carlos.oliveira@email.com', HASHBYTES('SHA2_256', 'car123')),
+    (@cli4, 'Diana Lima',       '11954321098', 'diana.lima@email.com',   HASHBYTES('SHA2_256', 'dia123')),
+    (@cli5, 'Eduardo Santos',   '11943210987', 'eduardo.santos@email.com', HASHBYTES('SHA2_256', 'edu123'));
 
 DECLARE @pro1 UNIQUEIDENTIFIER = NEWID();
 DECLARE @pro2 UNIQUEIDENTIFIER = NEWID();
@@ -105,12 +105,12 @@ DECLARE @pro3 UNIQUEIDENTIFIER = NEWID();
 DECLARE @pro4 UNIQUEIDENTIFIER = NEWID();
 DECLARE @pro5 UNIQUEIDENTIFIER = NEWID();
 
-INSERT INTO Profissional (id_profissional, nome, especialidade, telefone, ativo) VALUES
-    (@pro1, 'Fernanda Costa',   'Cabelereira', '11911112222', 1),
-    (@pro2, 'Gabriela Mendes',  'Manicure',    '11922223333', 1),
-    (@pro3, 'Helena Rodrigues', 'Esteticista', '11933334444', 1),
-    (@pro4, 'Igor Ferreira',    'Cabelereiro', '11944445555', 1),
-    (@pro5, 'Juliana Martins',  'Sobrancelha', '11955556666', 0);
+INSERT INTO Profissional (id_profissional, nome, especialidade, telefone, ativo, senha) VALUES
+    (@pro1, 'Fernanda Costa',   'Cabelereira', '11911112222', 1, HASHBYTES('SHA2_256', 'fer123')),
+    (@pro2, 'Gabriela Mendes',  'Manicure',    '11922223333', 1, HASHBYTES('SHA2_256', 'gab123')),
+    (@pro3, 'Helena Rodrigues', 'Esteticista', '11933334444', 1, HASHBYTES('SHA2_256', 'hel123')),
+    (@pro4, 'Igor Ferreira',    'Cabelereiro', '11944445555', 1, HASHBYTES('SHA2_256', 'igo123')),
+    (@pro5, 'Juliana Martins',  'Sobrancelha', '11955556666', 0, HASHBYTES('SHA2_256', 'jul123'));
 
 INSERT INTO Servico (nome, descricao, valor, ativo) VALUES
     ('Corte Feminino',     'Corte de cabelo feminino',            60.00, 1),
@@ -263,3 +263,5 @@ GO
 
 UPDATE Agendamento SET status = 'Confirmado' WHERE id_agendamento = 2;
 GO
+
+select * from VW_AgendaCompleta

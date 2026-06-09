@@ -1,6 +1,6 @@
 using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
-using OrBlancAPI.Contexts;
+//using OrBlancAPI.Contexts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +9,7 @@ Env.Load();
 string connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
 
 // Conexão com banco
-builder.Services.AddDbContext<OrBlancDBContext>(options => options.UseSqlServer(connectionString));
+//builder.Services.AddDbContext<OrBlancDBContext>(options => options.UseSqlServer(connectionString));
 
 
 // Add services to the container.

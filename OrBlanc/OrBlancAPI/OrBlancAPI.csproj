@@ -23,8 +23,7 @@
 
   <ItemGroup>
     <Folder Include="Applications\Services\" />
-    <Folder Include="Interfaces\" />
-    <Folder Include="Repositories\" />
+    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>

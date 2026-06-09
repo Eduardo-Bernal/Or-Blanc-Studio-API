@@ -13,5 +13,7 @@ public partial class Cliente
 
     public string? email { get; set; }
 
+    public byte[] senha { get; set; } = null!;
+
     public virtual ICollection<Agendamento> Agendamento { get; set; } = new List<Agendamento>();
 }
