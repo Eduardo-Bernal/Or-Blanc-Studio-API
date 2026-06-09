@@ -1,0 +1,55 @@
+﻿using OrBlancAPI.Contexts;
+using OrBlancAPI.Interfaces;
+using OrBlancAPI.Domains;
+
+namespace OrBlancAPI.Repositories
+{
+
+    public class ProfissionalRepository : IProfissionalRepository
+    {
+        
+        private readonly OrBlancDBContext _context;
+
+        public void ProfissionalRepository(OrBlancDBContext context)
+        {
+            _context = context;
+        }
+
+        public List<Profissional> Listar()
+        {
+            return _context.Profissional.OrderBy(p => p.nome).ToList();
+        }
+
+        public Profissional? BuscarPorId(Guid id)
+        {
+            return _context.Profissional.Find(id);
+        }
+
+        public void Adicionar(Profissional profissional)
+        {
+            _context.Profissional.Add(profissional);
+            _context.SaveChanges();
+        }
+
+        public void Atualizar(Profissional profissional)
+        {
+            Profissional? profissionalBanco = _context.Profissional.FirstOrDefault(p => p.id_profissional == profissional.id_profissional);
+
+            if (profissionalBanco == null) return;
+
+            profissionalBanco.nome = profissional.nome;
+            profissionalBanco.telefone = profissional.telefone;
+            profissionalBanco.especialidade = profissional.especialidade;
+        }
+
+        public void Remover(Guid id)
+        {
+            Profissional? profissionalBanco = _context.Profissional.FirstOrDefault(p => p.id_profissional == id);
+
+            if (profissionalBanco == null) return;
+
+            _context.Profissional.Remove(profissionalBanco);
+            _context.SaveChanges();
+        }
+    }
+}
