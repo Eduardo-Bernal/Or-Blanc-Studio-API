@@ -23,5 +23,19 @@ namespace OrBlancAPI.Controllers
 
             return clientes;
         }
+
+        [HttpPost]
+        public ActionResult<LerClienteDto> Adicionar(CriarClienteDto criarClienteDto)
+        {
+            try
+            {
+                LerClienteDto cliente = _service.Adicionar(criarClienteDto);
+                return StatusCode(201, cliente);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

@@ -1,14 +1,19 @@
-﻿using OrBlancAPI.DTOs.ClienteDto;
+﻿using OrBlancAPI.Domains;
+using OrBlancAPI.DTOs.ClienteDto;
+using OrBlancAPI.Exceptions;
+using OrBlancAPI.Interfaces;
 using OrBlancAPI.Repositories;
-using OrBlancAPI.Domains;
+using System.Security.Cryptography;
+using System.Text;
+using OrBlancAPI.Applications.Validaçoes;
 
 namespace OrBlancAPI.Applications.Services
 {
     public class ClienteService 
     {
-        public readonly ClienteRepository _repository;
+        private readonly IClienteRepository _repository;
 
-        public ClienteService(ClienteRepository repository) 
+        public ClienteService(IClienteRepository repository) 
         { 
             _repository = repository;
         }
@@ -35,6 +40,37 @@ namespace OrBlancAPI.Applications.Services
 
             return clienteDto;
 
+        }
+
+        private static byte[] HashSenha(string senha)
+        {
+            Validações.ValidarSenhaHash(senha);
+
+            using var sha256 = SHA256.Create(); 
+            return sha256.ComputeHash(Encoding.UTF8.GetBytes(senha));
+        }
+
+        public LerClienteDto Adicionar(CriarClienteDto criarClienteDto)
+        {
+            if(_repository.EmailExiste(criarClienteDto.email))
+            {
+                throw new DomainException("O email já está cadastrado.");
+            }
+
+            Validações.ValidarEmail(criarClienteDto.email);
+            Validações.ValidarTelefone(criarClienteDto.telefone);
+
+            Cliente cliente = new Cliente
+            {
+                nome = criarClienteDto.nome,
+                telefone = criarClienteDto.telefone,
+                email = criarClienteDto.email,
+                senha = HashSenha(criarClienteDto.senha)
+            };
+
+            _repository.Adicionar(cliente);
+
+            return LerDto(cliente);
         }
 
     }

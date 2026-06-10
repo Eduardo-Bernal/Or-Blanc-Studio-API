@@ -1,16 +1,27 @@
+using DotNetEnv;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using OrBlancAPI.Contexts;
-using System.Text;
 using OrBlancAPI.Applications.Autenticacao;
 using OrBlancAPI.Applications.Services;
 using OrBlancAPI.Contexts;
+using OrBlancAPI.Contexts;
 using OrBlancAPI.Interfaces;
 using OrBlancAPI.Repositories;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// carregando o .env
+Env.Load();
+
+// pegando a connection string
+string connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
+
+// Conexão com banco
+builder.Services.AddDbContext<OrBlancDBContext>(options => options.UseSqlServer(connectionString));
+
 
 // Add services to the container.
 
@@ -44,8 +55,7 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// chamar nossa conexão com o banco aqui na program
-builder.Services.AddDbContext<OrBlancDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+    
 
 // Usuário
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
@@ -82,7 +92,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         var audience = builder.Configuration["Jwt:Audience"]!;
 
         // Define as regras que serão usadas para validar o token recebido.
-        options.TokenValidationParameters = new TokenValidationParameters
+                options.TokenValidationParameters = new TokenValidationParameters
         {
             // Verifica se o emissor do token é válido
             // (se bate com o issuer configurado).
@@ -137,10 +147,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors("CorsPolicy");
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseCors("CorsPolicy");
+
 
 app.MapControllers();
 

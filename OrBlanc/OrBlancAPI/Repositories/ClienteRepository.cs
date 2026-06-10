@@ -20,20 +20,35 @@ namespace OrBlancAPI.Repositories
         }
 
 
+
         public VW_AgendaCompleta BuscarAgendamentosPendentes(string status)
         {
            return _context.VW_AgendaCompleta.FirstOrDefault(cliente => cliente.status == status);
         }
+
+
+
 
         public List<Cliente> Listar()
         {
            return _context.Cliente.OrderBy(c => c.nome).ToList();
         }
 
+
+
         public Cliente ListarClientePorID(Guid id)
         {
             return _context.Cliente.Find(id);
         }
+
+
+        
+        public Cliente BuscarPorEmail(string email)
+        {
+            return _context.Cliente.FirstOrDefault(c => c.email == email);
+        }
+
+
 
         public void Atualizar(Cliente cliente)
         {
@@ -48,6 +63,8 @@ namespace OrBlancAPI.Repositories
             _context.SaveChanges();
         }
 
+
+
         public void Remover(Guid id)
         {
             Cliente? cliente = _context.Cliente.FirstOrDefault(c => c.id_cliente == id);
@@ -58,5 +75,13 @@ namespace OrBlancAPI.Repositories
             _context.SaveChanges();
 
         }
+
+
+        public bool EmailExiste(string email)
+        {
+            return _context.Cliente.Any(c => c.email == email);
+        }
+
+
     }
 }
