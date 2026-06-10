@@ -26,6 +26,7 @@ public partial class OrBlancDBContext : DbContext
 
     public virtual DbSet<VW_AgendaCompleta> VW_AgendaCompleta { get; set; }
 
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Agendamento>(entity =>
@@ -52,7 +53,6 @@ public partial class OrBlancDBContext : DbContext
 
             entity.HasOne(d => d.id_clienteNavigation).WithMany(p => p.Agendamento)
                 .HasForeignKey(d => d.id_cliente)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Agendamento_Cliente");
 
             entity.HasOne(d => d.id_profissionalNavigation).WithMany(p => p.Agendamento)
@@ -93,6 +93,9 @@ public partial class OrBlancDBContext : DbContext
 
             entity.Property(e => e.id_profissional).HasDefaultValueSql("(newid())");
             entity.Property(e => e.ativo).HasDefaultValue(true);
+            entity.Property(e => e.email)
+                .HasMaxLength(100)
+                .IsUnicode(false);
             entity.Property(e => e.especialidade)
                 .HasMaxLength(100)
                 .IsUnicode(false);

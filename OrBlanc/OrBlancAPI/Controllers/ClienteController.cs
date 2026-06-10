@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using OrBlancAPI.Applications.Services;
 using OrBlancAPI.DTOs.ClienteDto;
+using OrBlancAPI.Exceptions;
 
 namespace OrBlancAPI.Controllers
 {
@@ -16,6 +17,8 @@ namespace OrBlancAPI.Controllers
             _service = service;
         }
 
+        
+
        [HttpGet]
        public ActionResult <List<LerClienteDto>> Listar()
         {
@@ -23,6 +26,7 @@ namespace OrBlancAPI.Controllers
 
             return clientes;
         }
+
 
         [HttpPost]
         public ActionResult<LerClienteDto> Adicionar(CriarClienteDto criarClienteDto)
@@ -32,7 +36,49 @@ namespace OrBlancAPI.Controllers
                 LerClienteDto cliente = _service.Adicionar(criarClienteDto);
                 return StatusCode(201, cliente);
             }
-            catch (Exception ex)
+            catch (DomainException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<LerClienteDto> ListarClientePorID(Guid id)
+        {
+            LerClienteDto clientes = _service.ListarClientePorID(id);
+
+            if(clientes == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(clientes);
+        }
+
+
+        [HttpPut("{id}")]
+        public ActionResult<LerClienteDto> Atualizar(Guid id ,CriarClienteDto AtualizarCliente)
+        {
+            try
+            {
+                LerClienteDto cliente = _service.Atualizar(id, AtualizarCliente);
+                return StatusCode(200, cliente);
+            }
+            catch (DomainException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult<LerClienteDto> Remover(Guid id)
+        {
+            try
+            {
+                _service.Remover(id);
+                return NoContent();
+            }
+            catch (DomainException ex)
             {
                 return BadRequest(ex.Message);
             }

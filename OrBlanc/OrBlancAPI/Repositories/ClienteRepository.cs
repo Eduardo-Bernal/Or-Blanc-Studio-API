@@ -59,6 +59,7 @@ namespace OrBlancAPI.Repositories
             clienteBanco.email = cliente.email;
             clienteBanco.telefone = cliente.telefone;
             clienteBanco.nome = cliente.nome;
+            clienteBanco.senha = cliente.senha;
            
             _context.SaveChanges();
         }

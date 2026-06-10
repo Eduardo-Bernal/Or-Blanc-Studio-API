@@ -17,5 +17,7 @@ public partial class Profissional
 
     public byte[] senha { get; set; } = null!;
 
+    public string? email { get; set; }
+
     public virtual ICollection<Agendamento> Agendamento { get; set; } = new List<Agendamento>();
 }
