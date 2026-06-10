@@ -2,8 +2,11 @@
 {
     public class CriarProfissionalDto
     {
-        public string nome { get; set; }
-        public string telefone { get; set; }
-        public string especialidade { get; set; }
+        public string nome { get; set; } = null!;
+        public string telefone { get; set; } = null!;   
+        public string email { get; set; } = null!;
+        public string especialidade { get; set; } = null!;
+        public string senha { get; set; } = null!;
+        public bool ativo { get; set; } = true;
     }
 }

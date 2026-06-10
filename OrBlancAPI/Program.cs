@@ -1,5 +1,10 @@
 using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using OrBlancAPI.Applications.Services;
+using OrBlancAPI.Contexts;
+using OrBlancAPI.Interfaces;
+using OrBlancAPI.Repositories;
 //using OrBlancAPI.Contexts;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,15 +14,46 @@ Env.Load();
 string connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
 
 // Conexão com banco
-//builder.Services.AddDbContext<OrBlancDBContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<OrBlancDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+
+// PROFISSIONAIS
+builder.Services.AddScoped<IProfissionalRepository, ProfissionalRepository>();
+builder.Services.AddScoped<ProfissionalService>();
 
 
-// Add services to the container.
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(
+     c =>
+     {
+         c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+         {
+             Name = "Authorization",
+             Type = SecuritySchemeType.Http,
+             Scheme = "bearer",
+             BearerFormat = "JWT",
+             In = ParameterLocation.Header,
+             Description = "Value: Bearer TokenJWT"
+         });
+         c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
+     }
+
+    );
 
 var app = builder.Build();
 
