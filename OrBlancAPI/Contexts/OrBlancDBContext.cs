@@ -26,7 +26,6 @@ public partial class OrBlancDBContext : DbContext
 
     public virtual DbSet<VW_AgendaCompleta> VW_AgendaCompleta { get; set; }
 
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Agendamento>(entity =>

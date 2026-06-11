@@ -43,7 +43,6 @@ namespace OrBlancAPI.Applications.Autenticacao
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        // ✅ Sobrecarga para Cliente
         public string GerarToken(Cliente usuario)
         {
             var claims = new List<Claim>
@@ -57,7 +56,6 @@ namespace OrBlancAPI.Applications.Autenticacao
             return GerarTokenInterno(claims);
         }
 
-        // ✅ Sobrecarga para Profissional
         public string GerarToken(Profissional usuario)
         {
             var claims = new List<Claim>
