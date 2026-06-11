@@ -137,8 +137,10 @@ GO
 CREATE VIEW VW_AgendaCompleta AS
 SELECT
     a.id_agendamento,
+    c.id_cliente, 
     c.nome                                                AS nome_cliente,
     c.telefone                                            AS telefone_cliente,
+    p.id_profissional,
     p.nome                                                AS nome_profissional,
     p.especialidade,
     s.nome                                                AS nome_servico,
@@ -154,6 +156,9 @@ FROM
     INNER JOIN Profissional p ON p.id_profissional = a.id_profissional
     INNER JOIN Servico      s ON s.id_servico      = a.id_servico;
 GO
+
+SELECT * FROM VW_AgendaCompleta
+
 
 
 CREATE TRIGGER TRG_VerificaConflito
