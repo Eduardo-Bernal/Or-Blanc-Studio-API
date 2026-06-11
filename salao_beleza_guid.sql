@@ -1,4 +1,5 @@
 
+
 CREATE DATABASE OrBlancDB;
 GO
 
@@ -137,8 +138,10 @@ GO
 CREATE VIEW VW_AgendaCompleta AS
 SELECT
     a.id_agendamento,
+    c.id_cliente, 
     c.nome                                                AS nome_cliente,
     c.telefone                                            AS telefone_cliente,
+    p.id_profissional,
     p.nome                                                AS nome_profissional,
     p.especialidade,
     s.nome                                                AS nome_servico,
@@ -154,6 +157,9 @@ FROM
     INNER JOIN Profissional p ON p.id_profissional = a.id_profissional
     INNER JOIN Servico      s ON s.id_servico      = a.id_servico;
 GO
+
+SELECT * FROM VW_AgendaCompleta
+
 
 
 CREATE TRIGGER TRG_VerificaConflito
@@ -265,3 +271,33 @@ UPDATE Agendamento SET status = 'Confirmado' WHERE id_agendamento = 2;
 GO
 
 select * from VW_AgendaCompleta
+
+USE OrBlancDB;
+GO
+
+-- Remove as FKs antigas
+ALTER TABLE Agendamento DROP CONSTRAINT FK_Agendamento_Cliente;
+ALTER TABLE Agendamento DROP CONSTRAINT FK_Agendamento_Profissional;
+ALTER TABLE Agendamento DROP CONSTRAINT FK_Agendamento_Servico;
+GO
+
+-- Recria só Cliente com CASCADE (hard delete faz sentido)
+ALTER TABLE Agendamento
+    ADD CONSTRAINT FK_Agendamento_Cliente
+    FOREIGN KEY (id_cliente) REFERENCES Cliente(id_cliente)
+    ON DELETE CASCADE;
+
+-- Profissional e Serviço SEM cascade (usaremos soft delete)
+ALTER TABLE Agendamento
+    ADD CONSTRAINT FK_Agendamento_Profissional
+    FOREIGN KEY (id_profissional) REFERENCES Profissional(id_profissional)
+    ON DELETE NO ACTION;
+
+ALTER TABLE Agendamento
+    ADD CONSTRAINT FK_Agendamento_Servico
+    FOREIGN KEY (id_servico) REFERENCES Servico(id_servico)
+    ON DELETE NO ACTION;
+GO
+
+ALTER TABLE Profissional
+    ADD email VARCHAR(100);
