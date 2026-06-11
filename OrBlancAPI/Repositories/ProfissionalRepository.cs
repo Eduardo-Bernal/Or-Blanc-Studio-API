@@ -7,10 +7,10 @@ namespace OrBlancAPI.Repositories
 
     public class ProfissionalRepository : IProfissionalRepository
     {
-        
+
         private readonly OrBlancDBContext _context;
 
-        public void ProfissionalRepository(OrBlancDBContext context)
+        public ProfissionalRepository(OrBlancDBContext context)
         {
             _context = context;
         }
@@ -38,8 +38,12 @@ namespace OrBlancAPI.Repositories
             if (profissionalBanco == null) return;
 
             profissionalBanco.nome = profissional.nome;
+            profissionalBanco.email = profissional.email;
+            profissionalBanco.senha = profissional.senha;
             profissionalBanco.telefone = profissional.telefone;
             profissionalBanco.especialidade = profissional.especialidade;
+
+            _context.SaveChanges();
         }
 
         public void Remover(Guid id)
@@ -50,6 +54,26 @@ namespace OrBlancAPI.Repositories
 
             _context.Profissional.Remove(profissionalBanco);
             _context.SaveChanges();
+        }
+
+        public Profissional? BuscarPorTelefone(string telefone)
+        {
+            return _context.Profissional.FirstOrDefault(p => p.telefone == telefone);
+        }
+
+        public Profissional? BuscarPorEmail(string email)
+        {
+            return _context.Profissional.FirstOrDefault(p => p.email == email);
+        }
+
+        public bool TelefoneExiste(string telefone)
+        {
+            return _context.Profissional.Any(p => p.telefone == telefone);
+        }
+
+        public bool EmailExiste(string email)
+        {
+            return _context.Profissional.Any(p => p.email == email);
         }
     }
 }

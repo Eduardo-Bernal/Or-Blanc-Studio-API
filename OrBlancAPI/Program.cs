@@ -57,9 +57,13 @@ builder.Services.AddSwaggerGen(c =>
 
     
 
-// Usuário
+// Cliente
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 builder.Services.AddScoped<ClienteService>();
+
+//Profissional
+builder.Services.AddScoped<IProfissionalRepository, ProfissionalRepository>();
+builder.Services.AddScoped<ProfissionalService>();
 
 
 // JWT
