@@ -24,6 +24,7 @@ namespace OrBlancAPI.Applications.Services
                 id_profissional = profissional.id_profissional,
                 nome = profissional.nome,
                 telefone = profissional.telefone,
+                email = profissional.email,
                 especialidade = profissional.especialidade,
                 ativo = profissional.ativo
             };
