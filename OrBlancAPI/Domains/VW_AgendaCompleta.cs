@@ -7,9 +7,13 @@ public partial class VW_AgendaCompleta
 {
     public int id_agendamento { get; set; }
 
+    public Guid id_cliente { get; set; }
+
     public string nome_cliente { get; set; } = null!;
 
     public string telefone_cliente { get; set; } = null!;
+
+    public Guid id_profissional { get; set; }
 
     public string nome_profissional { get; set; } = null!;
 
