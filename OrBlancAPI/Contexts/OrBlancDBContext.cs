@@ -31,14 +31,10 @@ public partial class OrBlancDBContext : DbContext
         modelBuilder.Entity<Agendamento>(entity =>
         {
             entity.HasKey(e => e.id_agendamento);
-
-            entity.ToTable(tb => tb.HasTrigger("TRG_VerificaConflito"));
-
+             
             entity.HasIndex(e => e.id_cliente, "IX_Agendamento_Cliente");
 
             entity.HasIndex(e => e.data_hora_inicio, "IX_Agendamento_DataHora");
-
-            entity.HasIndex(e => e.id_profissional, "IX_Agendamento_Profissional");
 
             entity.Property(e => e.data_hora_fim).HasColumnType("datetime");
             entity.Property(e => e.data_hora_inicio).HasColumnType("datetime");
@@ -54,15 +50,27 @@ public partial class OrBlancDBContext : DbContext
                 .HasForeignKey(d => d.id_cliente)
                 .HasConstraintName("FK_Agendamento_Cliente");
 
-            entity.HasOne(d => d.id_profissionalNavigation).WithMany(p => p.Agendamento)
-                .HasForeignKey(d => d.id_profissional)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Agendamento_Profissional");
-
             entity.HasOne(d => d.id_servicoNavigation).WithMany(p => p.Agendamento)
                 .HasForeignKey(d => d.id_servico)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Agendamento_Servico");
+
+            entity.HasMany(d => d.id_profissional).WithMany(p => p.id_agendamento)
+                .UsingEntity<Dictionary<string, object>>(
+                    "Agendamento_Profissional",
+                    r => r.HasOne<Profissional>().WithMany()
+                        .HasForeignKey("id_profissional")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK_AgPro_Profissional"),
+                    l => l.HasOne<Agendamento>().WithMany()
+                        .HasForeignKey("id_agendamento")
+                        .HasConstraintName("FK_AgPro_Agendamento"),
+                    j =>
+                    {
+                        j.HasKey("id_agendamento", "id_profissional");
+                        j.ToTable(tb => tb.HasTrigger("TRG_VerificaConflito"));
+                        j.HasIndex(new[] { "id_profissional" }, "IX_AgendamentoProfissional_Profissional");
+                    });
         });
 
         modelBuilder.Entity<Cliente>(entity =>
