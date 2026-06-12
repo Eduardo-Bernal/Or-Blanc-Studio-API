@@ -25,6 +25,7 @@ namespace OrBlancAPI.Repositories
             return _context.Profissional.Find(id);
         }
 
+
         public void Adicionar(Profissional profissional)
         {
             _context.Profissional.Add(profissional);
@@ -74,6 +75,16 @@ namespace OrBlancAPI.Repositories
         public bool EmailExiste(string email)
         {
             return _context.Profissional.Any(p => p.email == email);
+        }
+
+        public byte[] ObterImagem(Guid id)
+        {
+            var profissional = _context.Profissional
+                .Where(profissional => profissional.id_profissional == id)
+                .Select(profissional => profissional.imagem)
+                .FirstOrDefault();
+
+            return profissional;
         }
     }
 }

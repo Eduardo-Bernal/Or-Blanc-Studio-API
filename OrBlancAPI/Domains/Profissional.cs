@@ -13,11 +13,13 @@ public partial class Profissional
 
     public string telefone { get; set; } = null!;
 
+    public string? email { get; set; }
+
     public bool ativo { get; set; }
 
     public byte[] senha { get; set; } = null!;
 
-    public string? email { get; set; }
+    public byte[]? imagem { get; set; }
 
-    public virtual ICollection<Agendamento> Agendamento { get; set; } = new List<Agendamento>();
+    public virtual ICollection<Agendamento> id_agendamento { get; set; } = new List<Agendamento>();
 }

@@ -15,5 +15,7 @@ public partial class Servico
 
     public bool ativo { get; set; }
 
+    public byte[]? imagem { get; set; }
+
     public virtual ICollection<Agendamento> Agendamento { get; set; } = new List<Agendamento>();
 }

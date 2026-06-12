@@ -9,6 +9,7 @@ namespace OrBlancAPI.Interfaces
         Profissional? BuscarPorTelefone(string telefone);
         Profissional? BuscarPorEmail(string email);
 
+        byte[] ObterImagem(Guid id);
         bool TelefoneExiste(string telefone); 
         bool EmailExiste(string email);
 

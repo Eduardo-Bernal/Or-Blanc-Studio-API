@@ -6,6 +6,8 @@
         public string telefone { get; set; } = null!;   
         public string email { get; set; } = null!;
         public string especialidade { get; set; } = null!;
+        public IFormFile imagem { get; set; } = null!;
+        //public byte[] imagem { get; set; }
         public string senha { get; set; } = null!;
         public bool ativo { get; set; } = true;
     }

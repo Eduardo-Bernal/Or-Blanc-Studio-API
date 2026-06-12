@@ -4,6 +4,7 @@ using OrBlancAPI.Interfaces;
 using System.Security.Cryptography;
 using OrBlancAPI.Exceptions;
 using System.Text;
+using OrBlancAPI.Applications.Conversoes;
 
 
 namespace OrBlancAPI.Applications.Services
@@ -99,6 +100,18 @@ namespace OrBlancAPI.Applications.Services
             return ListarDto(profissional);
         }
 
+        public byte[] ObterImagem(Guid id)
+        {
+            byte[] imagem = _repository.ObterImagem(id);
+
+            if (imagem == null || imagem.Length == 0)
+            {
+                throw new DomainException("Imagem não encontrada");
+            }
+
+            return imagem;
+        }
+
         public static void ValidarNome(string nome)
         {
             if (string.IsNullOrEmpty(nome))
@@ -129,6 +142,7 @@ namespace OrBlancAPI.Applications.Services
                 telefone = criarProfissionalDto.telefone,
                 email = criarProfissionalDto.email,
                 especialidade = criarProfissionalDto.especialidade,
+                imagem = ImagemParaBytes.ConverterImagem(criarProfissionalDto.imagem),
                 senha = HashSenha(criarProfissionalDto.senha),
                 ativo = true
             };
@@ -168,6 +182,11 @@ namespace OrBlancAPI.Applications.Services
             profissionalBanco.senha = HashSenha(criarProfissionalDto.senha);
             profissionalBanco.ativo = criarProfissionalDto.ativo;
             profissionalBanco.especialidade = criarProfissionalDto.especialidade;
+
+            if (criarProfissionalDto.imagem != null && criarProfissionalDto.imagem.Length > 0)
+            {
+                profissionalBanco.imagem = ImagemParaBytes.ConverterImagem(profissionalBanco.imagem);
+            }
 
             _repository.Atualizar(profissionalBanco);
 

@@ -63,5 +63,15 @@ namespace OrBlancAPI.Repositories
             _context.Servico.Remove(servicoBanco);
             _context.SaveChanges();
         }
+
+        public byte[] ObterImagem(int id)
+        {
+            var servico = _context.Servico
+                .Where(servico => servico.id_servico == id)
+                .Select(servico => servico.imagem)
+                .FirstOrDefault();
+
+            return servico;
+        }
     }
 }

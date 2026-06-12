@@ -9,6 +9,7 @@ namespace OrBlancAPI.Interfaces
         Servico? BuscarPorId(int id);
         Servico BuscarPorNome(string nome);
 
+        byte[] ObterImagem(int id);
         bool NomeExiste(string nome);
 
         void Adicionar(Servico servico);

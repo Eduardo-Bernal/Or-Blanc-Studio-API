@@ -36,6 +36,24 @@ namespace OrBlancAPI.Controllers
             }
         }
 
+        [HttpGet("{id}/imagem")]
+        public ActionResult ObterImagem(Guid id)
+        {
+            try
+            {
+                var imagem = _service.ObterImagem(id);
+
+                // Retorna o arquivo para o navegador
+                // "image/jpeg" informa o tipo da imagem (MIME type)
+                // O navegador entende que deve renderizar como imagem
+                return File(imagem, "image/jpeg");
+            }
+            catch (DomainException ex)
+            {
+                return NotFound(ex.Message); // NotFound -> não encontrado
+            }
+        }
+
         [HttpGet("email/{email}")]
         public ActionResult<ListarProfissionalDto> BuscarPorEmail(string email)
         {
