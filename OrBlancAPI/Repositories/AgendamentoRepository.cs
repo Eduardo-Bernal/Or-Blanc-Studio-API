@@ -1,4 +1,5 @@
-﻿using OrBlancAPI.Contexts;
+﻿using Microsoft.EntityFrameworkCore;
+using OrBlancAPI.Contexts;
 using OrBlancAPI.Domains;
 using OrBlancAPI.Interfaces;
 
@@ -41,9 +42,13 @@ namespace OrBlancAPI.Repositories
                 .OrderBy(a => a.data_hora_inicio)
                 .ToList();
         }
-
-        public Agendamento Adicionar(Agendamento agendamento)
+        public Agendamento Adicionar(Agendamento agendamento, Guid idProfissional)
         {
+            var profissional = _context.Profissional.Find(idProfissional)
+                ?? throw new Exception("Profissional não encontrado.");
+
+            agendamento.id_profissional.Add(profissional);
+
             _context.Agendamento.Add(agendamento);
             _context.SaveChanges();
             return agendamento;
@@ -52,23 +57,38 @@ namespace OrBlancAPI.Repositories
         public void Atualizar(int id, string novoStatus)
         {
             var agendamento = _context.Agendamento.Find(id);
-
             if (agendamento == null) return;
 
             agendamento.status = novoStatus;
             _context.SaveChanges();
         }
 
-
         public void Remover(int id)
         {
             var agendamento = _context.Agendamento.Find(id);
-
             if (agendamento == null) return;
 
             _context.Agendamento.Remove(agendamento);
             _context.SaveChanges();
         }
 
+        public bool ExisteConflitoHorario(Guid idProfissional, DateTime inicio, DateTime fim, int? ignorarId = null)
+        {
+            return _context.VW_AgendaCompleta
+                .Any(a =>
+                    a.id_profissional == idProfissional &&
+                    a.status != "Cancelado" &&
+                    (ignorarId == null || a.id_agendamento != ignorarId) &&
+                    inicio < a.data_hora_fim &&
+                    fim > a.data_hora_inicio);
+        }
+
+        public int ContarAgendamentosAtivos(Guid idCliente)
+        {
+            return _context.Agendamento
+                .Count(a =>
+                    a.id_cliente == idCliente &&
+                    (a.status == "Agendado" || a.status == "Confirmado"));
+        }
     }
 }
