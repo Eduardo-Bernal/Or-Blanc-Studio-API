@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OrBlancAPI.Applications.Services;
 using OrBlancAPI.DTOs.ProfissionalDto;
@@ -18,6 +19,7 @@ namespace OrBlancAPI.Controllers
         }
 
         [HttpGet]
+        
         public ActionResult<List<ListarProfissionalDto>> Listar()
         {
             return Ok(_service.Listar());
@@ -64,6 +66,7 @@ namespace OrBlancAPI.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "Profissional")]
         public ActionResult<ListarProfissionalDto> Cadastrar(CriarProfissionalDto criarProfissionalDto)
         {
             try
@@ -78,6 +81,7 @@ namespace OrBlancAPI.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Profissional")]
         public ActionResult<ListarProfissionalDto> Atualizar(Guid id, CriarProfissionalDto criarProfissionalDto)
         {
             try
@@ -91,6 +95,7 @@ namespace OrBlancAPI.Controllers
             }
         }
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Profissional")]
         public ActionResult Remover(Guid id)
         {
             try

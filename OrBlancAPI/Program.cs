@@ -65,6 +65,10 @@ builder.Services.AddScoped<ClienteService>();
 builder.Services.AddScoped<IProfissionalRepository, ProfissionalRepository>();
 builder.Services.AddScoped<ProfissionalService>();
 
+//Agendamento
+builder.Services.AddScoped<IAgendamentoRepository, AgendamentoRepository>();
+builder.Services.AddScoped<AgendamentoService>();
+
 
 // JWT
 builder.Services.AddScoped<GeradorTokenJwt>();

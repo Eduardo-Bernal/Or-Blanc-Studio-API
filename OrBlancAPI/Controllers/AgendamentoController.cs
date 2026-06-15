@@ -9,7 +9,7 @@ namespace OrBlancAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize] // todos os endpoints exigem login
+    [Authorize] 
     public class AgendamentoController : ControllerBase
     {
         private readonly AgendamentoService _service;
@@ -68,9 +68,6 @@ namespace OrBlancAPI.Controllers
             {
                 var idToken = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
                 var role = User.FindFirstValue(ClaimTypes.Role);
-
-                if (role == "Profissional" && idToken != id)
-                    return Forbid();
 
                 List<LerAgendamentoDto> agendamentos = _service.BuscarPorProfissional(id);
                 return Ok(agendamentos);
