@@ -5,7 +5,7 @@ using OrBlancAPI.Applications.Services;
 using OrBlancAPI.Contexts;
 using OrBlancAPI.Interfaces;
 using OrBlancAPI.Repositories;
-//using OrBlancAPI.Contexts;
+using OrBlancAPI.Contexts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,14 +13,17 @@ Env.Load();
 // pegando a connection string
 string connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
 
-// Conexão com banco
-builder.Services.AddDbContext<OrBlancDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+builder.Services.AddDbContext<OrBlancDBContext>(
+    options => options.UseSqlServer(connectionString)
+);
 
 // PROFISSIONAIS
 builder.Services.AddScoped<IProfissionalRepository, ProfissionalRepository>();
 builder.Services.AddScoped<ProfissionalService>();
 
-
+// SERVIÇOS
+builder.Services.AddScoped<IServicoRepository, ServicoRepository>();
+builder.Services.AddScoped<ServicoService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -183,10 +183,10 @@ namespace OrBlancAPI.Applications.Services
             profissionalBanco.ativo = criarProfissionalDto.ativo;
             profissionalBanco.especialidade = criarProfissionalDto.especialidade;
 
-            if (criarProfissionalDto.imagem != null && criarProfissionalDto.imagem.Length > 0)
-            {
-                profissionalBanco.imagem = ImagemParaBytes.ConverterImagem(profissionalBanco.imagem);
-            }
+            //if (criarProfissionalDto.imagem != null && criarProfissionalDto.imagem.Length > 0)
+            //{
+            //    profissionalBanco.imagem = ImagemParaBytes.ConverterImagem(profissionalBanco.imagem);
+            //}
 
             _repository.Atualizar(profissionalBanco);
 

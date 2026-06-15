@@ -35,6 +35,7 @@ namespace OrBlancAPI.Repositories
             servicoBanco.descricao = servico.descricao;
             servicoBanco.valor = servico.valor;
             servicoBanco.ativo = servico.ativo;
+            servicoBanco.imagem = servico.imagem;
 
             _context.SaveChanges();
         }
