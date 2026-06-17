@@ -31,7 +31,7 @@ namespace OrBlancAPI.Applications.Services
         public List<ListarServicoDto> Listar()
         {
             List<Servico> servicos = _servicoRepository.Listar();
-            List<ListarServicoDto> servicoDtos = servicos.Select(s => ListarDto(s)).ToList();
+            List<ListarServicoDto> servicoDtos = servicos.Select(ServicoParaDto.ConverterParaDto).ToList();
 
             return servicoDtos;
         }
@@ -70,7 +70,7 @@ namespace OrBlancAPI.Applications.Services
             {
                 throw new DomainException("Serviço não encontrado.");
             }
-            return ListarDto(servico);
+            return ServicoParaDto.ConverterParaDto(servico);
         }
 
         public byte[] ObterImagem(int id)
@@ -104,7 +104,7 @@ namespace OrBlancAPI.Applications.Services
                 ativo = true
             };
             _servicoRepository.Adicionar(servico);
-            return ListarDto(servico);
+            return ServicoParaDto.ConverterParaDto(servico);
         }
 
         public ListarServicoDto Atualizar(int id, CriarServicoDto atualizarServico)
@@ -132,7 +132,7 @@ namespace OrBlancAPI.Applications.Services
                 servicoBanco.imagem = ImagemParaBytes.ConverterImagem(atualizarServico.imagem);
             }
             _servicoRepository.Atualizar(servicoBanco);
-            return ListarDto(servicoBanco);
+            return ServicoParaDto.ConverterParaDto(servicoBanco);
         }
 
         public void Deletar(int id)

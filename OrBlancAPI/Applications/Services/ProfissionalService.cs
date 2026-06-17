@@ -34,7 +34,7 @@ namespace OrBlancAPI.Applications.Services
         public List<ListarProfissionalDto> Listar()
         {
             List<Profissional> profissionais = _repository.Listar();
-            List<ListarProfissionalDto> profissionalDtos = profissionais.Select(p => ListarDto(p)).ToList();
+            List<ListarProfissionalDto> profissionalDtos = profissionais.Select(ProfissionalParaDto.ConverterParaDto).ToList();
 
             return profissionalDtos;
         }
@@ -64,7 +64,7 @@ namespace OrBlancAPI.Applications.Services
             {
                 throw new DomainException("Profissional não encontrado.");
             }
-            return ListarDto(profissional);
+            return ProfissionalParaDto.ConverterParaDto(profissional);
         }
 
         public ListarProfissionalDto BuscarPorEmail(string email)
@@ -97,7 +97,7 @@ namespace OrBlancAPI.Applications.Services
             {
                 throw new DomainException("Profissional não encontrado.");
             }
-            return ListarDto(profissional);
+            return ProfissionalParaDto.ConverterParaDto(profissional);
         }
 
         public byte[] ObterImagem(Guid id)
@@ -147,7 +147,7 @@ namespace OrBlancAPI.Applications.Services
                 ativo = true
             };
             _repository.Adicionar(profissional);
-            return ListarDto(profissional);
+            return ProfissionalParaDto.ConverterParaDto(profissional);
         }
 
         public ListarProfissionalDto Atualizar(Guid id, CriarProfissionalDto criarProfissionalDto)
@@ -190,7 +190,7 @@ namespace OrBlancAPI.Applications.Services
 
             _repository.Atualizar(profissionalBanco);
 
-            return ListarDto(profissionalBanco);
+            return ProfissionalParaDto.ConverterParaDto(profissionalBanco);
         }
 
         public void Deletar(Guid id)
