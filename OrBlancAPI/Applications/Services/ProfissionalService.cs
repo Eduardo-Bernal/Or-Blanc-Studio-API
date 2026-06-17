@@ -4,10 +4,7 @@ using OrBlancAPI.Interfaces;
 using System.Security.Cryptography;
 using OrBlancAPI.Exceptions;
 using System.Text;
-<<<<<<< .merge_file_XAKGOH
-=======
 using OrBlancAPI.Applications.Conversoes;
->>>>>>> .merge_file_3IznVq
 
 
 namespace OrBlancAPI.Applications.Services
@@ -29,12 +26,8 @@ namespace OrBlancAPI.Applications.Services
                 nome = profissional.nome,
                 telefone = profissional.telefone,
                 especialidade = profissional.especialidade,
-<<<<<<< .merge_file_XAKGOH
                 ativo = profissional.ativo,
                 email = profissional.email
-=======
-                ativo = profissional.ativo
->>>>>>> .merge_file_3IznVq
             };
             return listarProfissionalDto;
         }
@@ -42,11 +35,7 @@ namespace OrBlancAPI.Applications.Services
         public List<ListarProfissionalDto> Listar()
         {
             List<Profissional> profissionais = _repository.Listar();
-<<<<<<< .merge_file_XAKGOH
-            List<ListarProfissionalDto> profissionalDtos = profissionais.Select(p => ListarDto(p)).ToList();
-=======
             List<ListarProfissionalDto> profissionalDtos = profissionais.Select(ProfissionalParaDto.ConverterParaDto).ToList();
->>>>>>> .merge_file_3IznVq
 
             return profissionalDtos;
         }
@@ -76,11 +65,7 @@ namespace OrBlancAPI.Applications.Services
             {
                 throw new DomainException("Profissional não encontrado.");
             }
-<<<<<<< .merge_file_XAKGOH
-            return ListarDto(profissional);
-=======
             return ProfissionalParaDto.ConverterParaDto(profissional);
->>>>>>> .merge_file_3IznVq
         }
 
         public ListarProfissionalDto BuscarPorEmail(string email)
@@ -88,11 +73,7 @@ namespace OrBlancAPI.Applications.Services
             ValidarEmail(email);
             Profissional profissional = _repository.BuscarPorEmail(email);
 
-<<<<<<< .merge_file_XAKGOH
-            if (profissional == null)
-=======
             if(profissional == null)
->>>>>>> .merge_file_3IznVq
             {
                 throw new DomainException("Profissional não encontrado");
             }
@@ -117,9 +98,6 @@ namespace OrBlancAPI.Applications.Services
             {
                 throw new DomainException("Profissional não encontrado.");
             }
-<<<<<<< .merge_file_XAKGOH
-            return ListarDto(profissional);
-=======
             return ProfissionalParaDto.ConverterParaDto(profissional);
         }
 
@@ -133,7 +111,6 @@ namespace OrBlancAPI.Applications.Services
             }
 
             return imagem;
->>>>>>> .merge_file_3IznVq
         }
 
         public static void ValidarNome(string nome)
@@ -155,11 +132,7 @@ namespace OrBlancAPI.Applications.Services
                 throw new DomainException("Telefone ja cadastrado.");
             }
 
-<<<<<<< .merge_file_XAKGOH
-            if (_repository.EmailExiste(criarProfissionalDto.email))
-=======
             if(_repository.EmailExiste(criarProfissionalDto.email))
->>>>>>> .merge_file_3IznVq
             {
                 throw new DomainException("Email ja cadastrado.");
             }
@@ -170,19 +143,12 @@ namespace OrBlancAPI.Applications.Services
                 telefone = criarProfissionalDto.telefone,
                 email = criarProfissionalDto.email,
                 especialidade = criarProfissionalDto.especialidade,
-<<<<<<< .merge_file_XAKGOH
-=======
                 imagem = ImagemParaBytes.ConverterImagem(criarProfissionalDto.imagem),
->>>>>>> .merge_file_3IznVq
                 senha = HashSenha(criarProfissionalDto.senha),
                 ativo = true
             };
             _repository.Adicionar(profissional);
-<<<<<<< .merge_file_XAKGOH
-            return ListarDto(profissional);
-=======
             return ProfissionalParaDto.ConverterParaDto(profissional);
->>>>>>> .merge_file_3IznVq
         }
 
         public ListarProfissionalDto Atualizar(Guid id, CriarProfissionalDto criarProfissionalDto)
@@ -206,11 +172,7 @@ namespace OrBlancAPI.Applications.Services
                 throw new DomainException("Telefone já cadastrado.");
             }
 
-<<<<<<< .merge_file_XAKGOH
-            if (profissionalEmail != null && profissionalEmail.id_profissional != id)
-=======
             if(profissionalEmail != null && profissionalEmail.id_profissional != id)
->>>>>>> .merge_file_3IznVq
             {
                 throw new DomainException("Email ja cadastrado.");
             }
@@ -222,14 +184,6 @@ namespace OrBlancAPI.Applications.Services
             profissionalBanco.ativo = criarProfissionalDto.ativo;
             profissionalBanco.especialidade = criarProfissionalDto.especialidade;
 
-<<<<<<< .merge_file_XAKGOH
-            Console.WriteLine("BANANANANANANNANAN");
-            Console.WriteLine(profissionalBanco.email);
-
-            _repository.Atualizar(profissionalBanco);
-
-            return ListarDto(profissionalBanco);
-=======
             //if (criarProfissionalDto.imagem != null && criarProfissionalDto.imagem.Length > 0)
             //{
             //    profissionalBanco.imagem = ImagemParaBytes.ConverterImagem(profissionalBanco.imagem);
@@ -238,7 +192,6 @@ namespace OrBlancAPI.Applications.Services
             _repository.Atualizar(profissionalBanco);
 
             return ProfissionalParaDto.ConverterParaDto(profissionalBanco);
->>>>>>> .merge_file_3IznVq
         }
 
         public void Deletar(Guid id)
@@ -254,8 +207,4 @@ namespace OrBlancAPI.Applications.Services
             _repository.Atualizar(profissional);
         }
     }
-<<<<<<< .merge_file_XAKGOH
 }
-=======
-}
->>>>>>> .merge_file_3IznVq

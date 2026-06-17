@@ -71,17 +71,11 @@ namespace OrBlancAPI.Repositories
         {
             return _context.Profissional.Any(p => p.telefone == telefone);
         }
-<<<<<<< .merge_file_FQkWVZ
-
-=======
         
->>>>>>> .merge_file_4fxO2T
         public bool EmailExiste(string email)
         {
             return _context.Profissional.Any(p => p.email == email);
         }
-<<<<<<< .merge_file_FQkWVZ
-=======
 
         public byte[] ObterImagem(Guid id)
         {
@@ -92,6 +86,5 @@ namespace OrBlancAPI.Repositories
 
             return profissional;
         }
->>>>>>> .merge_file_4fxO2T
     }
 }

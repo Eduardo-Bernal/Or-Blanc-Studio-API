@@ -1,9 +1,5 @@
-<<<<<<< .merge_file_WdPfev
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-=======
-﻿using Microsoft.AspNetCore.Http;
->>>>>>> .merge_file_xGnBBM
 using Microsoft.AspNetCore.Mvc;
 using OrBlancAPI.Applications.Services;
 using OrBlancAPI.DTOs.ProfissionalDto;
@@ -23,10 +19,6 @@ namespace OrBlancAPI.Controllers
         }
 
         [HttpGet]
-<<<<<<< .merge_file_WdPfev
-        
-=======
->>>>>>> .merge_file_xGnBBM
         public ActionResult<List<ListarProfissionalDto>> Listar()
         {
             return Ok(_service.Listar());
@@ -45,8 +37,6 @@ namespace OrBlancAPI.Controllers
             }
         }
 
-<<<<<<< .merge_file_WdPfev
-=======
         [HttpGet("{id}/imagem")]
         public ActionResult ObterImagem(Guid id)
         {
@@ -65,7 +55,6 @@ namespace OrBlancAPI.Controllers
             }
         }
 
->>>>>>> .merge_file_xGnBBM
         [HttpGet("email/{email}")]
         public ActionResult<ListarProfissionalDto> BuscarPorEmail(string email)
         {
@@ -86,11 +75,7 @@ namespace OrBlancAPI.Controllers
             {
                 return Ok(_service.BuscarPorTelefone(telefone));
             }
-<<<<<<< .merge_file_WdPfev
-            catch (DomainException ex)
-=======
             catch(DomainException ex)
->>>>>>> .merge_file_xGnBBM
             {
                 return NotFound(ex.Message);
             }
@@ -98,10 +83,7 @@ namespace OrBlancAPI.Controllers
 
 
         [HttpPost]
-<<<<<<< .merge_file_WdPfev
         [Authorize(Roles = "Profissional")]
-=======
->>>>>>> .merge_file_xGnBBM
         public ActionResult<ListarProfissionalDto> Cadastrar(CriarProfissionalDto criarProfissionalDto)
         {
             try
@@ -116,10 +98,7 @@ namespace OrBlancAPI.Controllers
         }
 
         [HttpPut("{id}")]
-<<<<<<< .merge_file_WdPfev
         [Authorize(Roles = "Profissional")]
-=======
->>>>>>> .merge_file_xGnBBM
         public ActionResult<ListarProfissionalDto> Atualizar(Guid id, CriarProfissionalDto criarProfissionalDto)
         {
             try
@@ -133,10 +112,7 @@ namespace OrBlancAPI.Controllers
             }
         }
         [HttpDelete("{id}")]
-<<<<<<< .merge_file_WdPfev
         [Authorize(Roles = "Profissional")]
-=======
->>>>>>> .merge_file_xGnBBM
         public ActionResult Remover(Guid id)
         {
             try
@@ -151,8 +127,4 @@ namespace OrBlancAPI.Controllers
         }
 
     }
-<<<<<<< .merge_file_WdPfev
 }
-=======
-}
->>>>>>> .merge_file_xGnBBM
