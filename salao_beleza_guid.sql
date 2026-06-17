@@ -1,7 +1,7 @@
 CREATE DATABASE OrBlancDB;
 GO
 
-USE OrBlancDB;
+USE OrBlancDB
 GO
 
 
@@ -137,8 +137,13 @@ INSERT INTO Servico (nome, descricao, valor, ativo, imagem) VALUES
     ('Pedicure',           'Unhas dos pés com esmalte comum',     35.00, 1, NULL),
     ('Design Sobrancelha', 'Design e depilação de sobrancelha',   25.00, 1, NULL),
     ('Limpeza de Pele',    'Limpeza profunda e hidratação',      120.00, 1, NULL);
+<<<<<<< .merge_file_bCBAyt
 
 DECLARE @age1 INT, @age2 INT, @age3 INT,
+=======
+                    
+ DECLARE @age1 INT, @age2 INT, @age3 INT,
+>>>>>>> .merge_file_ezp2Ur
         @age4 INT, @age5 INT, @age6 INT,
         @age7 INT, @age8 INT;
 
@@ -319,3 +324,10 @@ GO
 UPDATE Agendamento SET status = 'Confirmado' WHERE id_agendamento = 2;
 GO
 
+<<<<<<< .merge_file_bCBAyt
+=======
+UPDATE Servico 
+set imagem = 0x48656C6C6F20576F726C64
+WHERE imagem IS NULL
+GO
+>>>>>>> .merge_file_ezp2Ur

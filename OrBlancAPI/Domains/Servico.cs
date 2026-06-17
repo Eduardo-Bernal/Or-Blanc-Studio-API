@@ -15,7 +15,11 @@ public partial class Servico
 
     public bool ativo { get; set; }
 
+<<<<<<< .merge_file_w28RbV
     public byte[]? imagem { get; set; }
+=======
+    public byte[] imagem { get; set; } = null!;
+>>>>>>> .merge_file_YLN8gA
 
     public virtual ICollection<Agendamento> Agendamento { get; set; } = new List<Agendamento>();
 }

@@ -1,6 +1,7 @@
 using DotNetEnv;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+<<<<<<< .merge_file_pkqnz7
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using OrBlancAPI.Applications.Autenticacao;
@@ -10,6 +11,14 @@ using OrBlancAPI.Contexts;
 using OrBlancAPI.Interfaces;
 using OrBlancAPI.Repositories;
 using System.Text;
+=======
+using Microsoft.OpenApi.Models;
+using OrBlancAPI.Applications.Services;
+using OrBlancAPI.Contexts;
+using OrBlancAPI.Interfaces;
+using OrBlancAPI.Repositories;
+using OrBlancAPI.Contexts;
+>>>>>>> .merge_file_DrTs6J
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,15 +28,27 @@ Env.Load();
 // pegando a connection string
 string connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
 
+<<<<<<< .merge_file_pkqnz7
 // Conexão com banco
 builder.Services.AddDbContext<OrBlancDBContext>(options => options.UseSqlServer(connectionString));
+=======
+builder.Services.AddDbContext<OrBlancDBContext>(
+    options => options.UseSqlServer(connectionString)
+);
+>>>>>>> .merge_file_DrTs6J
 
+// PROFISSIONAIS
+builder.Services.AddScoped<IProfissionalRepository, ProfissionalRepository>();
+builder.Services.AddScoped<ProfissionalService>();
 
-// Add services to the container.
+// SERVIÇOS
+builder.Services.AddScoped<IServicoRepository, ServicoRepository>();
+builder.Services.AddScoped<ServicoService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+<<<<<<< .merge_file_pkqnz7
 builder.Services.AddSwaggerGen(c =>
 {
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -40,6 +61,21 @@ builder.Services.AddSwaggerGen(c =>
         Description = "Value: Bearer TokenJWT"
     });
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
+=======
+builder.Services.AddSwaggerGen(
+     c =>
+     {
+         c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+         {
+             Name = "Authorization",
+             Type = SecuritySchemeType.Http,
+             Scheme = "bearer",
+             BearerFormat = "JWT",
+             In = ParameterLocation.Header,
+             Description = "Value: Bearer TokenJWT"
+         });
+         c.AddSecurityRequirement(new OpenApiSecurityRequirement
+>>>>>>> .merge_file_DrTs6J
     {
         {
             new OpenApiSecurityScheme
@@ -53,6 +89,7 @@ builder.Services.AddSwaggerGen(c =>
             new string[] {}
         }
     });
+<<<<<<< .merge_file_pkqnz7
 });
 
     
@@ -143,6 +180,11 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod();
         });
 });
+=======
+     }
+
+    );
+>>>>>>> .merge_file_DrTs6J
 
 var app = builder.Build();
 

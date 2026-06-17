@@ -26,12 +26,17 @@ public partial class OrBlancDBContext : DbContext
 
     public virtual DbSet<VW_AgendaCompleta> VW_AgendaCompleta { get; set; }
 
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Agendamento>(entity =>
         {
             entity.HasKey(e => e.id_agendamento);
+<<<<<<< .merge_file_Dqh55q
              
+=======
+
+>>>>>>> .merge_file_T2nbzO
             entity.HasIndex(e => e.id_cliente, "IX_Agendamento_Cliente");
 
             entity.HasIndex(e => e.data_hora_inicio, "IX_Agendamento_DataHora");
