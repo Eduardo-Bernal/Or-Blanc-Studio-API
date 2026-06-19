@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OrBlancAPI.Applications.Services;
 using OrBlancAPI.DTOs.ProfissionalDto;
@@ -64,7 +65,8 @@ namespace OrBlancAPI.Controllers
             }
         }
 
-        [HttpPost] 
+        [HttpPost]
+        [Authorize(Roles = "Profissional")]
         public ActionResult<ListarServicoDto> Adicionar(CriarServicoDto criarServicoDto)
         {
             try
@@ -79,6 +81,7 @@ namespace OrBlancAPI.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Profissional")]
         public ActionResult<ListarServicoDto> Atualizar(int id,CriarServicoDto atualizarServicoDto)
         {
             try
@@ -93,6 +96,7 @@ namespace OrBlancAPI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Profissional")]
         public IActionResult Remover(int id)
         {
             try

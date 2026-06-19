@@ -20,7 +20,7 @@ namespace OrBlancAPI.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Profissional")]
+        
         public ActionResult<List<LerAgendamentoDto>> Listar()
         {
             List<LerAgendamentoDto> agendamentos = _service.Buscar();
