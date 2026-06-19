@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OrBlancAPI.Domains;
-    
+
 namespace OrBlancAPI.Contexts;
 
 public partial class OrBlancDBContext : DbContext
@@ -32,6 +32,7 @@ public partial class OrBlancDBContext : DbContext
         modelBuilder.Entity<Agendamento>(entity =>
         {
             entity.HasKey(e => e.id_agendamento);
+
             entity.HasIndex(e => e.id_cliente, "IX_Agendamento_Cliente");
 
             entity.HasIndex(e => e.data_hora_inicio, "IX_Agendamento_DataHora");

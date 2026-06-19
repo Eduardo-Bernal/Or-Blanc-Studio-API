@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OrBlancAPI.Applications.Services;
 using OrBlancAPI.DTOs.ClienteDto;
@@ -71,6 +72,7 @@ namespace OrBlancAPI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Profissional")]
         public ActionResult<LerClienteDto> Remover(Guid id)
         {
             try

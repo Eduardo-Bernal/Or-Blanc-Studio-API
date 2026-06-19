@@ -19,6 +19,10 @@ namespace OrBlancAPI.Controllers
         }
 
         [HttpGet]
+<<<<<<< HEAD
+=======
+        
+>>>>>>> 29d2012ea0ff6b64f92c7c896f0e09ec6f4d3741
         public ActionResult<List<LerAgendamentoDto>> Listar()
         {
             List<LerAgendamentoDto> agendamentos = _service.Buscar();
