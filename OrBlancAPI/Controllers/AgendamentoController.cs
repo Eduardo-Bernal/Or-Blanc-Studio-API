@@ -9,7 +9,6 @@ namespace OrBlancAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize] 
     public class AgendamentoController : ControllerBase
     {
         private readonly AgendamentoService _service;
@@ -20,7 +19,6 @@ namespace OrBlancAPI.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Profissional")]
         public ActionResult<List<LerAgendamentoDto>> Listar()
         {
             List<LerAgendamentoDto> agendamentos = _service.Buscar();
@@ -79,7 +77,7 @@ namespace OrBlancAPI.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Cliente")]
+        [Authorize]
         public ActionResult<LerAgendamentoDto> Criar(CriarAgendamentoDto dto)
         {
             try
@@ -115,7 +113,7 @@ namespace OrBlancAPI.Controllers
         }
 
         [HttpPatch("{id}/reagendar")]
-        [Authorize(Roles = "Cliente")]
+        [Authorize]
         public ActionResult<LerAgendamentoDto> Reagendar(int id, [FromBody] ReagendarAgendamentoDto dto)
         {
             try
