@@ -37,7 +37,13 @@ namespace OrBlancAPI.Applications.Services
 
             if (cliente != null && VerificarSenha(loginDto.Senha, cliente.senha))
             {
-                return new TokenDto { Token = _tokenJwt.GerarToken(cliente) };
+                return new TokenDto
+                {
+                    Token = _tokenJwt.GerarToken(cliente),
+                    Nome = cliente.nome,
+                    Role = "Cliente",
+                    IdCliente = cliente.id_cliente
+                };
             }
 
             //  Tenta encontrar como Profissional
@@ -46,7 +52,13 @@ namespace OrBlancAPI.Applications.Services
 
             if (profissional != null && VerificarSenha(loginDto.Senha, profissional.senha))
             {
-                return new TokenDto { Token = _tokenJwt.GerarToken(profissional) };
+                return new TokenDto
+                {
+                    Token = _tokenJwt.GerarToken(profissional),
+                    Nome = profissional.nome,
+                    Role = "Profissional",
+                    IdProfissional = profissional.id_profissional
+                };
             }
 
             // 3️⃣ Não encontrou em nenhuma tabela

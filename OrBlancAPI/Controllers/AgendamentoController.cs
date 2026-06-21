@@ -83,9 +83,9 @@ namespace OrBlancAPI.Controllers
         {
             try
             {
-                var idToken = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-                if (idToken != dto.id_cliente)
-                    return Forbid();
+                //var idToken = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+                //if (idToken != dto.id_cliente)
+                //    return Forbid();
 
                 LerAgendamentoDto agendamento = _service.Criar(dto);
                 return StatusCode(201, agendamento);
