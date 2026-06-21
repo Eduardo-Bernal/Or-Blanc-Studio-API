@@ -323,10 +323,16 @@ GO
 UPDATE Agendamento SET status = 'Confirmado' WHERE id_agendamento = 2;
 GO
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> df6d843aa5a90e48925b4250b9992fa51950b1b7
 UPDATE Servico 
 set imagem = 0x48656C6C6F20576F726C64
 WHERE imagem IS NULL
 GO
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> df6d843aa5a90e48925b4250b9992fa51950b1b7

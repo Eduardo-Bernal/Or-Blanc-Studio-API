@@ -10,6 +10,7 @@ namespace OrBlancAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ServicoController : ControllerBase
     {
         private readonly ServicoService _service;
