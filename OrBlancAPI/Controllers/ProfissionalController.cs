@@ -83,7 +83,7 @@ namespace OrBlancAPI.Controllers
 
 
         [HttpPost]
-        [Authorize(Roles = "Profissional")]
+        //[Authorize(Roles = "Profissional")]
         public ActionResult<ListarProfissionalDto> Cadastrar(CriarProfissionalDto criarProfissionalDto)
         {
             try
