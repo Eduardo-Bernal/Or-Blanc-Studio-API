@@ -155,7 +155,6 @@ namespace OrBlancAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Profissional")]
         public ActionResult Remover(int id)
         {
             try
