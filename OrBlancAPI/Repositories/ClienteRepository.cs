@@ -83,6 +83,11 @@ namespace OrBlancAPI.Repositories
             return _context.Cliente.Any(c => c.email == email);
         }
 
+        public bool EmailExisteAtualizar(string email, Guid id)
+        {
+            return _context.Cliente.Where(c => c.id_cliente != id).Any(c => c.email == email);
+        }
+
 
     }
 }

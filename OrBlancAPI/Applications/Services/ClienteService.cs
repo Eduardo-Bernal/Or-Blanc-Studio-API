@@ -89,7 +89,7 @@ namespace OrBlancAPI.Applications.Services
         {
             Cliente clienteBanco = _repository.ListarClientePorID(id);
 
-            if (_repository.EmailExiste(criarClienteDto.email))
+            if (_repository.EmailExisteAtualizar(criarClienteDto.email, id))
             {
                 throw new DomainException("O email já está cadastrado.");
             }

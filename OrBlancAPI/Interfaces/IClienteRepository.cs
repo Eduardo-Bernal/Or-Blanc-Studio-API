@@ -11,6 +11,7 @@ namespace OrBlancAPI.Interfaces
         Cliente BuscarPorEmail(string email);
 
         bool EmailExiste(string email);
+        bool EmailExisteAtualizar(string email, Guid id);
 
         void Adicionar(Cliente cliente);
         void Atualizar(Cliente cliente);
